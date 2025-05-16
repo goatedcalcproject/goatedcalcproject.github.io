@@ -1,0 +1,13 @@
+
+<html>
+    <head>
+        <script>
+            function hi() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const contents = localStorage.getItem(atob(urlParams.get("name")));
+                window.location.href = `data:text/plain;base64,${btoa(contents)}`;
+            }
+        </script>
+    </head>
+    <body onload="hi()"></body>
+</html>

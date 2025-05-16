@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walls95 Editor</title>
+    <script src="./editor.js"></script>
+    <style>
+        .tile {
+            /* border: 1px solid #000; */
+            background: #eee;
+            border: none;
+            margin: 0px;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            cursor: pointer;
+            display: inline-block;
+            image-rendering: pixelated;
+        }
+        .tile:hover {
+            outline: 5px solid #0f0;
+        }
+        .occupied-tile {
+            background: #66c;
+        }
+        .level-editor {
+            background: #fff;
+            color: #000;
+            overflow: scroll;
+        }
+        #editor {
+            padding: 200px;
+        }
+        #editor-tools {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            height: fit-height;
+        }
+    </style>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body class="level-editor" onerror="alert(event);">
+    <div id="editor-tools" class="outset-box">
+        <h2>Level Editor</h2>
+        <hr>
+        <input type="file" id="file"><br /><hr />
+        <button onclick="importSelectedFile()">Edit map</button><hr />
+        <button onclick="saveMap()">Save</button>
+        <button onclick="exportMap()">Export</button>
+        <!-- <button onclick="playMap()">Playtest</button> -->
+        <a id="export-link" style="display: none;"></a>
+        <hr />
+
+        Win condition:&nbsp;
+        <select id="win-condition-select">
+            <option>EXIT</option>
+            <option>DOCUMENTS_COLLECTED</option>
+            <option>DOCUMENTS_COLLECTED_SNIFFER</option>
+        </select>
+        <input type="color">
+
+        <hr />
+        
+        Select tile:
+        <select id="tile-select">
+            <option value="EMPTY">EMPTY</option>
+
+            <option disabled><b>-- Triggers/Spawns --</b></option>
+            <option value="PLAYER_SPAWN">Player Spawn</option>
+            <option value="SECRET_TRIGGER">Secret Trigger</option>
+
+            <option disabled><b>-- Items --</b></option>
+            <option value="ICECREAM_PEDESTAL">Ice Cream (Item Pickup)</option>
+            <option value="DOCUMENT_PEDESTAL">Document (Item Pickup)</option>
+
+            <option disabled><b>-- Entities --</b></option>
+            <option value="BOB_ENTITY">Bob (Door)</option>
+            <option value="MARTIN_ENTITY">Martin (Locker)</option>
+            <option value="GOB_ENTITY">Gob</option>
+            <option value="SNIFFER_ENTITY">Sniffer</option>
+
+            <option disabled><b>-- Other --</b></option>
+            <option value="PURPLE_TILED_WALL">Purple Tiled Wall</option>
+            <option value="PURPLE_TILED_WALL_PAINTING">Purple Painting Wall</option>
+            <option value="METAL_WALL">Metal Wall</option>
+            <option value="METAL DOOR">Metal Door</option>
+            <option value="WALLPAPER_WALL">Wallpaper</option>
+            <option value="WALLPAPER_WALL_DECORATED">Wallpaper Decorated</option>
+        </select>
+
+        <br />
+        <br />
+    </div>
+    <div id="editor">
+        <br />
+    </div>
+</body>
+</html>

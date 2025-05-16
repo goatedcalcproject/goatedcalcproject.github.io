@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>WALLS 95</title>
+		<link rel="stylesheet" href="./index.css">
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "https://unpkg.com/three@v0.167.1/build/three.module.js",
+                    "three/addons/": "https://unpkg.com/three@v0.167.1/examples/jsm/"
+                }
+            }
+        </script>
+        <!-- <script type="importmap">
+            {
+                "imports": {
+                    "three": "../node_modules/three/build/three.module.js",
+                    "three/addons/": "../node_modules/three/examples/jsm/"
+                }
+            }
+        </script> -->
+        <script type="module" src="./index.js"></script>
+	</head>
+	<body class="unselectable">
+        <!--  onerror="alert(event)" -->
+        <!-- <img src="textures/left_hand.png" class="viewmodel" style="transform: translateX(-75vh) !important;"> -->
+        <img src="textures/right_hand.png" class="viewmodel" id="right-hand" style="transform: translateX(-25vh) !important;">
+        <!-- <img src="textures/eyespy.gif" class="viewmodel-orb"> -->
+
+        <div id="dataviewer">
+            <!-- <span class="danger" style="font-size: 1.3em;">DATAVIEWER v1.0</span> -->
+            <div id="health">
+                <img src="textures/heart.gif" class="icon">
+                <img src="textures/heart.gif" class="icon">
+                <img src="textures/heart.gif" class="icon">
+                <img src="textures/heart.gif" class="icon">
+                <img src="textures/heart.gif" class="icon">
+            </div>
+            <p id="user-data"></p>
+        </div>
+        <h1 id="secret" style="display: none;"><span class="ugly">You found a</span> SECRET</h1>
+        <h1 id="objective" style="display: none;">ts pmo icl 💔</h1>
+
+        <div id="death-screen" class="hidden">
+            <center style="margin-top: 30vh;">
+                <span style="background: #d2d2d2; padding: 2px 15px; color: #3a1ea9;"
+                    id="bsod-1" class="hidden">Walls 95</span>
+                <br><br>
+                <div style="width: 700px; text-align: left;" id="bsod-2" class="hidden">
+                    An error has occurred. To continue:<br><br>
+                    You must restart your system. If you do this, you will lose any unsaved information in all open applications.<br><br>
+                    Error: SK_ISSUE : 016F : BFF9B3D4<br><br>
+                </div>
+                <br>
+                <span id="bsod-3" class="hidden">
+                    Press SPACE to continue <span class="blinking">_</span>
+                </span>
+            </center>
+        </div>
+        <div id="win-screen" class="hidden">
+            <center style="margin-top: 30vh;">
+                <span style="background: #d2d2d2; padding: 2px 15px; color: #222;"
+                    id="win-1" class="hidden">FLOOR CLEARED</span>
+                <br><br>
+                <div style="width: 700px; text-align: left;" id="win-2" class="hidden">
+                    u win lol<br><br>
+                    idk what to p[ut here ts pmo<br><br>
+                </div>
+                <br>
+                <span id="win-3" class="hidden">
+                    Press SPACE to continue <span class="blinking">_</span>
+                </span>
+            </center>
+        </div>
+        <!-- <img src="textures/crosshair.png" id="crosshair"> -->
+
+        <div id="damage-overlay"></div>
+        <div id="heal-overlay"></div>
+        <div id="scanline-overlay"></div>
+        <div id="sniffer-overlay"></div>
+        <div id="hiding-overlay" class="hidden">
+            <center>
+                <br /><br /><br />
+                <br /><br /><br />
+                <img src="./textures/hidden.png" style="width: 96px;" />
+                <!-- <h4 class="blinking">You are hidden.</h4> -->
+                <h2>
+                    [SPACE] to get out</h2>
+            </center>
+        </div>
+        <div class="hiding-1 hidden"></div> <!-- preload -->
+        <div class="hiding-2 hidden"></div> <!-- preload -->
+
+        <div id="loading-overlay">
+            <div class="window" id="loading-window">
+                <div class="window-header">
+                    Loading level...
+                </div>
+                <div class="window-content">
+                    <center>
+                        <img src="./textures/loading_bar.gif" class="loading-bar" /><br />
+                    </center>
+                </div>
+            </div>
+        </div>
+	</body>
+</html>

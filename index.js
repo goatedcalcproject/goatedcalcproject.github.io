@@ -249,18 +249,18 @@ function updateHiding(delta) {
     });
     if (player.userData.hiding) {
         hidingOverlay.classList.remove("hidden");
-        if (player.userData.martinDamageTimer < 0.5) {
-            hidingOverlay.classList.remove("hiding-1");
-            hidingOverlay.classList.add("hiding-2");
-        }
-        else if (player.userData.martinDamageTimer < 1.75) {
-            hidingOverlay.classList.remove("hiding-2");
-            hidingOverlay.classList.add("hiding-1");
-        }
-        else {
-            hidingOverlay.classList.remove("hiding-1");
-            hidingOverlay.classList.remove("hiding-2");
-        }
+        // if (player.userData.martinDamageTimer < 0.5) {
+        //     hidingOverlay.classList.remove("hiding-1");
+        //     hidingOverlay.classList.add("hiding-2");
+        // }
+        // else if (player.userData.martinDamageTimer < 1.75) {
+        //     hidingOverlay.classList.remove("hiding-2");
+        //     hidingOverlay.classList.add("hiding-1");
+        // }
+        // else {
+        //     hidingOverlay.classList.remove("hiding-1");
+        //     hidingOverlay.classList.remove("hiding-2");
+        // }
     }
     else {
         hidingOverlay.classList.add("hidden");

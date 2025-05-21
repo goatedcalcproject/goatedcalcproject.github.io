@@ -7,7 +7,7 @@
     "ceilingTexturePath": "fancy_floor.png",
     "ceilingPresent": true,
     "directionalLightColor": 16773811,
-    "directionalLightIntensity": 1.5,
+    "directionalLightIntensity": 0.5,
     "ambientLightColor": 7830689,
     "ambientLightIntensity": 1,
     "ambientSoundPath": "soundtracks/generic_ambience.wav",

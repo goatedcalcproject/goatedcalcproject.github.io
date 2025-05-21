@@ -148,13 +148,13 @@ function Martin(player) {
     const object = new Tile(true, true, true, false, false); object.name = "ENTITY_MRTN";
 
     // let damageTimer = 0;
-    const damageCooldown = Math.PI * 1.75;
+    const damageCooldown = 9999999999999999999999;
 
     let previouslyHidden = false;
     let sprite;
 
     let cooldownTimer = 0;
-    let cooldown = 3.5;
+    let cooldown = 6.5;
 
     let hiddenInSelf = false;
 
@@ -190,19 +190,19 @@ function Martin(player) {
             && inSquareCollider(player.position, object.position, 0.5, 0));
 
         // IMPORTANT NOTE: assume trigger checking runs before level update
-        if (player.userData.hiding && hiddenInSelf) {
-            if (!previouslyHidden) player.userData.martinDamageTimer = damageCooldown * 1.5;
+        // if (player.userData.hiding && hiddenInSelf) {
+        //     if (!previouslyHidden) player.userData.martinDamageTimer = damageCooldown * 1.5;
 
-            if (player.userData.martinDamageTimer <= 0) {
-                // console.log("aergyuerwuguygergugyeiuog")
-                player.userData.health -= 1;
-                player.userData.martinDamageTimer = damageCooldown;
-            }
-            else {
-                player.userData.martinDamageTimer -= delta;
-                console.log("minus")
-            }
-        }
+        //     if (player.userData.martinDamageTimer <= 0) {
+        //         // console.log("aergyuerwuguygergugyeiuog")
+        //         player.userData.health -= 1;
+        //         player.userData.martinDamageTimer = damageCooldown;
+        //     }
+        //     else {
+        //         player.userData.martinDamageTimer -= delta;
+        //         console.log("minus")
+        //     }
+        // }
 
         cooldownTimer -= delta;
         previouslyHidden = player.userData.hiding;
@@ -692,8 +692,8 @@ function Sniffer(level, player, listener, scene) {
         // console.log(getSpeedMultiplier())
         updateNodeIndicator();
 
-        smokeParticles.position.copy(object.position);
-        smokeParticles.update(delta);
+        // smokeParticles.position.copy(object.position);
+        // smokeParticles.update(delta);
 
         timeElapsed += delta;
 

@@ -220,7 +220,7 @@ hr {
     opacity: 0;
 }
 #hiding-overlay {
-    background-image: url("./textures/hiding_overlay.png"), radial-gradient(circle, transparent 0%, #000 100%);
+    background-image: radial-gradient(circle, transparent 0%, #000 80%, #000);
     background-size: cover;
     background-position: center;
     image-rendering: pixelated;
@@ -229,6 +229,9 @@ hr {
     height: 100vh;
     pointer-events: none;
     z-index: 800;
+    /* url("./textures/hiding_overlay.png"),  */
+
+    /* opacity: 0.5; */
 }
 .hiding-1 {
     background-image: 
@@ -376,7 +379,7 @@ input[type=color] {
     height: 3em;
     margin: -1em;
 }
-#startup-overlay-1, #startup-overlay-2, #loading-overlay {
+#startup-overlay-1, #startup-overlay-2, #loading-overlay, #apclassroom-overlay {
     background: #111;
     color: #fff;
     position: fixed;
@@ -385,6 +388,9 @@ input[type=color] {
     top: 0px;
     left: 0px;
     z-index: 300;
+}
+#apclassroom-overlay {
+    background: #11111167;
 }
 #startup-overlay-2 {
     text-align: center;

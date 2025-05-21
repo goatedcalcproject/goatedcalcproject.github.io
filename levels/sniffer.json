@@ -1,7 +1,7 @@
 {
     "winCondition": "DOCUMENTS_COLLECTED_SNIFFER",
     "fogColor": 0,
-    "fogDensity": 0.09,
+    "fogDensity": 0.06,
     "skyTexturePath": "sky.png",
     "floorTexturePath": "fancy_floor.png",
     "ceilingTexturePath": "fancy_floor.png",

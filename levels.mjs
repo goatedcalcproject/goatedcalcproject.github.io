@@ -21,8 +21,8 @@ export function Level(main, scene, player, listener, filePath = "./levels/welcom
         // "Y": () => { return new tiles.WallBlock(util.loadTexture("wallpaper.png", 4, 4)); },
         "WALLPAPER_WALL": () => { return new tiles.WallBlock(util.loadTexture("wallpaper.png")); },
         "WALLPAPER_WALL_DECORATED": () => { return new tiles.RandomizedWallBlock([
-            util.loadTexture("wallpaper_painting.png"),
-            util.loadTexture("wallpaper_painting2.png"),
+            util.loadTexture("wallpaper_decorated.png"),
+            // util.loadTexture("wallpaper_painting2.png"),
         ])},
     
         "METAL_DOOR": () => { return new tiles.BlockDoor(util.loadTexture("metal.png"), listener); },

@@ -7,69 +7,19 @@
     <link rel="stylesheet" href="./index.css">
     <script src="./mainmenu.js"></script>
 </head>
-<body class="desktop unselectable" 
-    onload="doStartupSequence(); startTimeUpdates(); browser.permissions.request('');">
-    <!-- <a href="./level.html?filePath=d2VsY29tZS53OTU=">level 1 (welcome.w95)</a><br>
-    <a href="./level.html?filePath=dGVzdGluZy53OTU=">Sniffer Level (testing.w95)</a> &lt; play this one lol
-    <br /> -->
-    
-    <img src="./textures/wallpaper_logo.png" id="logo-corner" />
-
-    <button class="desktop-icon" ondblclick="openWindow('eyespy')">
-        <img src="./textures/eyespy_small.gif"><br />
-        Eyespy Antivirus (Start Game)
-    </button><br />
-
-    <button class="desktop-icon" ondblclick="openWindow('iexplore')">
-        <img src="./textures/iexplore.png"><br />
-        Net Explorer
-    </button><br />
-
-    <button class="desktop-icon" ondblclick="openWindow('credits')">
-        <img src="./textures/collectibles/document.png"><br />
-        Credits
-    </button><br />
-
-
-    <!-- <div class="window hidden">
-        <div class="window-header">
-            Skibidi or not
-            <button style="float: right;">X</button>
+<body class="unselectable" onload="displayDialog(0);" onerror="alert(event)">
+    <div id="cutscene">
+        <div id="cutscene-content">
+            //
         </div>
-        <div class="window-content">
-            
+        <br />
+        <span id="cutscene-text">testing text lmaooo</span>
+        <br />
+        <br />
+        <div id="cutscene-buttons">
+            <button>Ooptin 1 lol</button>
+            <button>Ooptin 2 lol</button>
         </div>
-    </div> -->
-    
-    <div id="windows"></div>
-
-    <div id="taskbar">
-        <button>
-            <img src="./textures/logo.png" id="start-logo" />
-            &nbsp;Start
-        </button>
-        <div style="float: right;">
-            | <span id="time">12:00 PM</span>
-            &nbsp;&nbsp;&nbsp;
-        </div>
-    </div>
-    <div id="scanline-overlay"></div>
-
-    <div id="startup-overlay-1">
-        <img src="./textures/american_minitrends.png" id="american-minitrends" />
-        <br /><br />
-        (c) 1999 American Minitrends Inc.
-        <br /><br />
-        <span id="minitrends-1" class="hidden">Total memory: 95536MB</span>
-        <br /><br />
-        <span id="minitrends-2" class="hidden">USB Devices total: 1 Drive, 1 Keyboard, 1 Mouse, 4 Hubs</span>
-        <br /><br />
-        <span id="minitrends-3" class="hidden">
-            Starting up...
-        </span>
-    </div>
-    <div id="startup-overlay-2" class="hidden">
-        <img src="./textures/logo_massive.gif" id="logo-massive" />
     </div>
 </body>
 </html>

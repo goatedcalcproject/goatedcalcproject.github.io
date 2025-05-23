@@ -26,7 +26,7 @@ let listener = undefined;
 
 let player = undefined;
 let playerVelocity = 0;
-const MAX_HEALTH = 5;
+const MAX_HEALTH = 4;
 let dead = false;
 let locked = false;
 
@@ -77,6 +77,8 @@ function setupCamera() {
     camera.add(listener);
 }
 let controls = null;
+let previouslyTormented = false;
+
 function setupPlayer() {
     setupCamera();
     setupSky();
@@ -86,7 +88,8 @@ function setupPlayer() {
     player.add(camera);
     player.userData.hiding = false;
     player.userData.martinDamageTimer = 0;
-    player.userData.health = 5;
+    player.userData.health = 4;
+    player.userData.beingTormented = false;
     controls = new PointerLockControls(camera, document.body);
     controls.pointerSpeed = 0.6;
     controls.minPolarAngle = Math.PI/2;
@@ -178,6 +181,22 @@ function start() {
     //     document.getElementById("loading-overlay").remove();
     // }, 300);
     document.getElementById("loading-overlay").remove();
+
+    document.getElementById("answers").onsubmit = (event) => {
+        // alert("hiiiii")
+        event.preventDefault();
+        const answer = parseInt(document.querySelector("#answers input").value);
+        if (answer == problemAnswers[problemIndex]) {
+            //
+        }
+        else {
+            player.userData.health -= 1;
+        }
+
+        document.getElementById("answers").reset();
+        document.getElementById("apclassroom-overlay").classList.add("hidden");
+        player.userData.beingTormented = false;
+    }
 }
 
 const WALK_SPEED = 7;
@@ -190,10 +209,26 @@ function updatePlayer(delta) {
     if (pressedKeys.a || pressedKeys.A) strafeMovement--;
     if (pressedKeys.d || pressedKeys.D) strafeMovement++;
 
-    if (player.userData.hiding) {
+    if (player.userData.hiding || player.userData.beingTormented) {
         walkMovement = 0;
         strafeMovement = 0;
+        if (player.userData.beingTormented) controls.unlock();
     }
+
+    if (player.userData.beingTormented && !previouslyTormented) {
+        // show ap classroom overlay
+        generateNewProblem();
+        document.getElementById("apclassroom-overlay").classList.toggle("hidden");
+        //
+        //
+        //
+        // very important lol akgfga87wisyt08owisrjtf;;;;
+        //
+        //
+        //
+        //
+    }
+    previouslyTormented = player.userData.beingTormented;
 
     theta = camera.rotation.y;
     const walkVector = new THREE.Vector3(
@@ -390,6 +425,20 @@ function update() {
     renderer.render(scene, camera);
     // composer.render();
 }
+
+const problemAnswers = [20, 0, 2, 6, 0];
+let problemIndex = 0;
+
+function generateNewProblem() {
+    problemIndex = Math.floor(Math.random() * 5);
+    try {
+        document.getElementById("problem-image").src = `./problems/${problemIndex}.png`;
+    }
+    catch (e) {
+        alert(e);
+    }
+}
+
 
 let main = {
     secretFound

@@ -1,5 +1,3 @@
-const times = [ "12:99 PM", "5:57 PM", "10:05 AM", "1:32 AM" ]
-
 const windowPresets = {
     "eyespy": {
         title: "Eyespy Antivirus v1.0",
@@ -60,17 +58,24 @@ const windowPresets = {
             </center>`
     }
 }
+const dialog = [
+    {
+        "text": "Did you do your FRQs? they've been due since last week!",
+        "options": ["Yes", "Yep", "Yeah"],
+    },
+    {
+        "text": "Yeah, where is it then?",
+        "options": ["I lost them on the way to class"],
+    },
+    {
+        "text": "EXCUSES! You know what happens when you don't do your FRQs. YOU WILL PAY",
+        "options": ["..."],
+    }
+]
 
-function startTimeUpdates() {
-    setInterval(() => {
-        document.getElementById("time").innerText = times[Math.floor(Math.random() * times.length)]
-    }, 1000);
-}
 function openLevel(filePath) {
-    openWindow("loading-window");
-    setTimeout(() => {
-        window.location.href = `./level.html?filePath=${btoa(filePath)}`;
-    }, 500 + Math.random() * 500);
+    // openWindow("loading-window");
+    window.location.href = `./level.html?filePath=${btoa(filePath)}`;
 }
 
 function openWindow(id) {
@@ -89,38 +94,52 @@ function closeWindow(id) {
     document.getElementById(id).remove();
 }
 
-function outputDoogleResults() {
-    const corrections = [
-        "how does nuclear winter affect the trout population?", "can i eat plutonium?", 
-        "are pickles the same as fingers?", "john", "can i eat uranium?"]
+function displayDialog(_index) {
+    if (_index >= dialog.length) {
+        document.querySelector("#cutscene").style.display = "none";
+        openLevel("sniffer.json");
+        return;
+    }
 
-    const enteredInput = document.getElementById("doogle-input").value;
-    const sanitizedValue = enteredInput.replace("\"", "\\\"");
-    const content = `
-        <br /><br />
-        <form onsubmit="outputDoogleResults(); return false;" style="line-height: 2em; margin-left: 10px;">
-            <input style="width: 50%;" id="doogle-input" value="${sanitizedValue}" autocomplete="off" />&nbsp;
-            <button>Search</button>
-        </form>
-        <hr />
-        <div style="padding: 10px; line-height: 1.25em;">
-            No results were found...<br /><br />
-            <i>Did you mean</i>: ${corrections[Math.floor(Math.random() * corrections.length)]}
-        </div>
-    `;
-    document.getElementById("iexplore-content").innerHTML = content;
-}
+    // ===================================================================
 
-function doStartupSequence() {
-    setTimeout(() => { document.getElementById("minitrends-1").classList.remove("hidden"); }, 100);
-    setTimeout(() => { document.getElementById("minitrends-2").classList.remove("hidden"); }, 300);
-    setTimeout(() => { document.getElementById("minitrends-3").classList.remove("hidden"); }, 500);
-    setTimeout(() => {
-        document.getElementById("startup-overlay-2").classList.remove("hidden");
-    }, 1100);
+    const dialogText = document.querySelector("#cutscene-text");
+    const dialogOptions = document.querySelector("#cutscene-buttons");
 
-    setTimeout(() => {
-        document.getElementById("startup-overlay-1").classList.add("hidden");
-        document.getElementById("startup-overlay-2").classList.add("hidden");
-    }, 2950);
+    const _dialog = dialog[_index];
+    const _dialogText = _dialog.text;
+
+    let timeSeconds = 3;
+    let index = 0;
+
+    dialogText.innerHTML = "";
+    dialogOptions.innerHTML = "";
+
+    const interval = setInterval(() => {
+        if (index < _dialogText.length) {
+            dialogText.innerHTML += _dialogText[index];
+            index++;
+            if (_dialogText[index] == " ") {
+                dialogText.innerHTML += _dialogText[index];
+            }
+        }
+        else {
+            clearInterval(interval);
+
+            for (let i = 0; i < _dialog.options.length; i++) {
+                const option = document.createElement("button");
+                option.innerHTML = _dialog.options[i];
+                option.onclick = () => {
+                    displayDialog(_index + 1);
+                };
+                dialogOptions.appendChild(option);
+
+                const space = document.createElement("span");
+                space.innerHTML = "&nbsp;";
+                dialogOptions.appendChild(space);
+            }
+
+            return;
+        }
+    }, timeSeconds * 1000 / _dialogText.length);
 }

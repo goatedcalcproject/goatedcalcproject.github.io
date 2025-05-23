@@ -472,17 +472,19 @@ function RusherEnemy(level, listener, textures, deathTexture, speed, damage, pla
     }
 
     function canAttack() {
-        return !player.userData.hiding
+        return !player.userData.hiding;
     }
 
     function inTrigger(position, radius = 0, _player) {
-        if (!canAttack()) return;
+        if (!object.canAttack()) return;
         
         const _inTrigger = !dead && inCylinderCollider(position, object.position, attackRadius, radius);
         if (_player && _inTrigger && timeSinceLastAttack >= cooldown) {
-            _player.userData.health -= damage;
-            timeSinceLastAttack = 0;
-            knockbackMultiplier = -1.5;
+            // _player.userData.health -= damage;
+            // timeSinceLastAttack = 0;
+            // knockbackMultiplier = -1.5;
+
+            _player.userData.beingTormented = true;
         }
         return _inTrigger;
     }
@@ -588,8 +590,8 @@ function Sniffer(level, player, listener, scene) {
     const multiplierThing = 0.5;
 
     const sniffingRadius = 32; // * 2
-    const sniffingSpeed = 5.75; // * 8
-    const chargingSpeed = 6; // * 0.75
+    const sniffingSpeed = 6.5; // * 8
+    const chargingSpeed = 6.85; // * 0.75
     const object = new RusherEnemy(level, listener, 
         [util.loadTexture("entities/hahn/hahn1.png"), util.loadTexture("entities/hahn/hahn2.png")], 
         util.loadTexture("entities/hahn/hahn2.png"), chargingSpeed, 100, player, 8, 4, 1e5,
@@ -609,9 +611,14 @@ function Sniffer(level, player, listener, scene) {
 
     let sniffingSound = undefined;
     let timeElapsed = 0;
+
+    let previouslyTormented = false;
     
     let tilePlane = new THREE.Mesh(new THREE.PlaneGeometry(TILE_SIZE, TILE_SIZE, TILE_SIZE), 
         new THREE.MeshBasicMaterial({ color: 0x00ff00 }));
+
+    const stunnedCooldown = 5;
+    let stunnedTimer = 0;
 
     function getSpeedMultiplier() {
         let documentsCollected = 0;
@@ -688,7 +695,29 @@ function Sniffer(level, player, listener, scene) {
         tilePlane.rotation.x = -Math.PI / 2;
         tilePlane.position.y = 0.02;
     }
+
+    function canAttack() {
+        // return false;
+        return !player.userData.hiding && stunnedTimer <= 0 && !player.userData.beingTormented;
+    }
+
     function update(delta) {
+        if (player.userData.beingTormented) {
+            stunnedTimer = stunnedCooldown;
+            return;
+        }
+        if (!player.userData.beingTormented && previouslyTormented) {
+            // stun
+            alert("dih");
+            // stunnedTimer <= 0
+        }
+        previouslyTormented = player.userData.beingTormented;
+
+        if (stunnedTimer > 0) {
+            stunnedTimer -= delta;
+            // do funny particles idk lmao
+        }
+
         // console.log(getSpeedMultiplier())
         updateNodeIndicator();
 
@@ -728,6 +757,8 @@ function Sniffer(level, player, listener, scene) {
     }
 
     function onSightUpdate(delta) {
+        if (stunnedTimer > 0) return;
+
         let moveVector = player.position.clone().sub(object.position);
         let strafeVector = new THREE.Vector3(-moveVector.z, 0, moveVector.x).normalize();
         moveVector.y = 0;
@@ -749,6 +780,22 @@ function Sniffer(level, player, listener, scene) {
             unsniffedUpdate(delta);
         }
     }
+
+    // function inTrigger(position, radius = 0, _player) {
+    //     try {
+    //         if (!object.canAttack()) return;
+            
+    //         const _inTrigger = !object.dead && inCylinderCollider(position, object.position, object.attackRadius, radius);
+    //         if (_player && _inTrigger && timeSinceLastAttack >= cooldown) {
+    //             _player.userData.beingTormented = true;
+    //         }
+    //         return _inTrigger;
+    //     }
+    //     catch (e) {
+    //         alert(e);
+    //         return false;
+    //     }
+    // }
     
     function updatePath() {
         path = level.aStar(level.worldToTile(object.position), 
@@ -793,10 +840,12 @@ function Sniffer(level, player, listener, scene) {
         moveAlongPath(delta);
     }
 
+    object.canAttack = canAttack;
     // object.update = (delta) => { console.log("pee")}
     object.update = update;
     // object.onSightUpdate = onSightUpdate;
     object.outOfSightUpdate = outOfSightUpdate;
+    // object.inTrigger = inTrigger;
     awake();
 
     return object;

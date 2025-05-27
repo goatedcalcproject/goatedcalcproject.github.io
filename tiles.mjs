@@ -308,7 +308,7 @@ function Exit(level) {
 }
 
 function ItemPedestal(listener, id) {
-    const object = new Tile(true, true, true, false, true); object.name = "TILE_PDSTL";
+    const object = new Tile(false, true, true, false, true); object.name = "TILE_PDSTL";
     let item;
     let timeElapsed = 0;
     let collected = false;
@@ -342,9 +342,9 @@ function ItemPedestal(listener, id) {
         item = new THREE.Sprite(new THREE.SpriteMaterial({ map: util.loadTexture(`collectibles/${id}.png`) }));
         object.add(item);
         
-        const pedestal = new THREE.Sprite(new THREE.SpriteMaterial({ map: util.loadTexture("pillar.png") }));
-        object.add(pedestal);
-        pedestal.scale.set(4, 4, 4);
+        // const pedestal = new THREE.Sprite(new THREE.SpriteMaterial({ map: util.loadTexture("pillar.png") }));
+        // object.add(pedestal);
+        // pedestal.scale.set(4, 4, 4);
 
         sound = new THREE.Audio(listener);
         audioLoader.load("./audio/collect.wav", (buffer) => {
@@ -354,7 +354,7 @@ function ItemPedestal(listener, id) {
     }
     function update(delta) {
         timeElapsed += delta;
-        item.position.y = 0.03 * Math.sin(timeElapsed * 7);
+        item.position.y = 0.07 * Math.sin(timeElapsed * 7) - 0.85;
     }
     
     object.colliding = colliding;
@@ -589,7 +589,7 @@ function RusherEnemy(level, listener, textures, deathTexture, speed, damage, pla
 function Sniffer(level, player, listener, scene) {
     const multiplierThing = 0.5;
 
-    const sniffingRadius = 32; // * 2
+    const sniffingRadius = 25; // * 2
     const sniffingSpeed = 6.5; // * 8
     const chargingSpeed = 6.85; // * 0.75
     const object = new RusherEnemy(level, listener, 
@@ -646,11 +646,11 @@ function Sniffer(level, player, listener, scene) {
         let timeElapsed = 0;
 
         sniffingSound = new THREE.PositionalAudio(listener);
-        audioLoader.load("./audio/sniffing.wav", (buffer) => {
+        audioLoader.load("./audio/voices/chase.mp3", (buffer) => {
             sniffingSound.setBuffer(buffer);
             sniffingSound.setRefDistance(15);
-            sniffingSound.setMaxDistance(sniffingRadius * 0.6);
-            sniffingSound.setVolume(0.2);
+            sniffingSound.setMaxDistance(sniffingRadius * 1.3);
+            sniffingSound.setVolume(1.1);
             sniffingSound.setLoop(true);
             sniffingSound.play();
             object.add(sniffingSound);
@@ -702,14 +702,12 @@ function Sniffer(level, player, listener, scene) {
     }
 
     function update(delta) {
+        document.getElementById("sniffer-overlay").style.opacity = 
+            Math.max(0.5 - (0.5 / (sniffingRadius * 0.75)) * player.position.distanceTo(object.position), 0);
+        
         if (player.userData.beingTormented) {
             stunnedTimer = stunnedCooldown;
             return;
-        }
-        if (!player.userData.beingTormented && previouslyTormented) {
-            // stun
-            alert("dih");
-            // stunnedTimer <= 0
         }
         previouslyTormented = player.userData.beingTormented;
 
@@ -751,9 +749,6 @@ function Sniffer(level, player, listener, scene) {
         } else {
             outOfSightUpdate(delta);
         }
-
-        document.getElementById("sniffer-overlay").style.opacity = 
-            Math.max(0.5 - (0.5 / (sniffingRadius * 0.75)) * player.position.distanceTo(object.position), 0);
     }
 
     function onSightUpdate(delta) {

@@ -1,3 +1,5 @@
+--> "Hi"
+Hi/Hello/Sup
 --> "Did you do your FRQs? they've been due since last week!"
 Yes/Yep/I did them
 --> "Yeah, where is it then?"

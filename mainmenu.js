@@ -60,16 +60,29 @@ const windowPresets = {
 }
 const dialog = [
     {
+        "text": "",
+        "options": ["Start Game"],
+        "time": 0.1, "sound": ""
+    },
+    {
+        "text": "Hi",
+        "options": ["Hi", "Hello", "sup"],
+        "time": 0.5, "sound": "./audio/1.mp3"
+    },
+    {
         "text": "Did you do your FRQs? they've been due since last week!",
         "options": ["Yes", "Yep", "Yeah"],
+        "time": 4, "sound": "./audio/2.mp3"
     },
     {
         "text": "Yeah, where is it then?",
         "options": ["I lost them on the way to class"],
+        "time": 3, "sound": "./audio/3.mp3"
     },
     {
         "text": "EXCUSES! You know what happens when you don't do your FRQs. YOU WILL PAY",
         "options": ["..."],
+        "time": 7, "sound": "./audio/4.mp3"
     }
 ]
 
@@ -97,8 +110,15 @@ function closeWindow(id) {
 function displayDialog(_index) {
     if (_index >= dialog.length) {
         document.querySelector("#cutscene").style.display = "none";
-        openLevel("sniffer.json");
+        openLevel("./levels/sniffer.json");
         return;
+    }
+
+    if (_index == 4) {
+        document.getElementById("mr-hahn").src = "./textures/entities/hahn/hahnangry.png";
+    }
+    else if (_index == 1) {
+        document.getElementById("mr-hahn").classList.remove("sliding-in");
     }
 
     // ===================================================================
@@ -109,11 +129,14 @@ function displayDialog(_index) {
     const _dialog = dialog[_index];
     const _dialogText = _dialog.text;
 
-    let timeSeconds = 3;
+    // alert(_dialog.time);
+    let timeSeconds = _dialog.time;
     let index = 0;
 
     dialogText.innerHTML = "";
     dialogOptions.innerHTML = "";
+
+    document.getElementById("mr-hahn").classList.add("talking");
 
     const interval = setInterval(() => {
         if (index < _dialogText.length) {
@@ -130,6 +153,8 @@ function displayDialog(_index) {
                 const option = document.createElement("button");
                 option.innerHTML = _dialog.options[i];
                 option.onclick = () => {
+                    const audio = new Audio(dialog[_index + 1].sound);
+                    audio.play();
                     displayDialog(_index + 1);
                 };
                 dialogOptions.appendChild(option);
@@ -139,7 +164,9 @@ function displayDialog(_index) {
                 dialogOptions.appendChild(space);
             }
 
+            document.getElementById("mr-hahn").classList.remove("talking");
             return;
         }
     }, timeSeconds * 1000 / _dialogText.length);
 }
+

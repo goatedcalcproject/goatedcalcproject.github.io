@@ -72,17 +72,17 @@ const dialog = [
     {
         "text": "Did you do your FRQs? they've been due since last week!",
         "options": ["Yes", "Yep", "Yeah"],
-        "time": 4, "sound": "./audio/voices/2.mp3"
+        "time": 3, "sound": "./audio/voices/2.mp3"
     },
     {
         "text": "Yeah, where is it then?",
         "options": ["I lost them on the way to class"],
-        "time": 3, "sound": "./audio/voices/3.mp3"
+        "time": 1.7, "sound": "./audio/voices/3.mp3"
     },
     {
         "text": "EXCUSES! You know what happens when you don't do your FRQs. YOU WILL PAY",
         "options": ["..."],
-        "time": 7, "sound": "./audio/voices/4.mp3"
+        "time": 5.7, "sound": "./audio/voices/4.mp3"
     }
 ]
 

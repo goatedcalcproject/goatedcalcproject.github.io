@@ -95,7 +95,8 @@ hr {
     box-shadow: 7px 7px 0px rgba(0, 0, 0, 0.5);
 }
 #death-screen {
-    background: #3a1ea9;
+    /* background: #3a1ea9; */
+    background: #121212;
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -185,8 +186,8 @@ hr {
 #sniffer-overlay {
     /* background-color: ; */
     background-image: 
-        url("./textures/sniffer_indicator.gif"), radial-gradient(circle, transparent 0%, #000 70%);
-    background-size: 500px;
+        url("./textures/hahn_indicator.gif"), radial-gradient(circle, transparent 0%, #000 70%);
+    background-size: 400px;
     image-rendering: pixelated;
     position: fixed;
     width: 100vw;

@@ -78,6 +78,7 @@ function setupCamera() {
 }
 let controls = null;
 let previouslyTormented = false;
+let previouslyHiding = false;
 
 function setupPlayer() {
     setupCamera();
@@ -187,10 +188,13 @@ function start() {
         event.preventDefault();
         const answer = parseInt(document.querySelector("#answers input").value);
         if (answer == problemAnswers[problemIndex]) {
-            //
+            const ding = new Audio("./audio/collect.wav");
+            ding.play();
         }
         else {
             player.userData.health -= 1;
+            const fard = new Audio("./audio/fard.wav");
+            fard.play();
         }
 
         document.getElementById("answers").reset();
@@ -219,6 +223,9 @@ function updatePlayer(delta) {
         // show ap classroom overlay
         generateNewProblem();
         document.getElementById("apclassroom-overlay").classList.toggle("hidden");
+
+        const vineBoom = new Audio("./audio/vine_boom.wav");
+        vineBoom.play();
         //
         //
         //
@@ -296,10 +303,16 @@ function updateHiding(delta) {
         //     hidingOverlay.classList.remove("hiding-1");
         //     hidingOverlay.classList.remove("hiding-2");
         // }
+        if (!previouslyHiding) {
+            const fard = new Audio("./audio/locker.wav");
+            fard.play();
+        }
     }
     else {
         hidingOverlay.classList.add("hidden");
     }
+
+    previouslyHiding = player.userData.hiding;
 }
 
 const clock = new THREE.Clock();
@@ -330,30 +343,8 @@ function update() {
         listener.setMasterVolume(0);
         document.querySelector("canvas").remove();
 
-        const collectedDocuments = (player.userData.document) ? player.userData.document : 0;
-        document.getElementById("win-2").innerHTML = 
-            `<center>
-            YOUR STATS:<br />
-            </center>`;
-
-        setTimeout(() => { document.getElementById("win-1").classList.remove("hidden"); }, 100);
-        setTimeout(() => {
-            document.getElementById("win-2").classList.remove("hidden");
-
-            let date = new Date(0);
-            date.setSeconds(timeElapsed);
-            let timeString = date.toISOString().substring(11, 19);
-
-            setTimeout(() => {
-                document.querySelector("#win-2 center").innerHTML += 
-                    `<span class="stat-animated">
-                        &nbsp;&nbsp;- Documents collected: ${collectedDocuments}/${level.totalDocuments}
-                        <br />
-                        &nbsp;&nbsp;- Time: ${timeString}
-                    </span><br />`;
-            }, 100);
-        }, 250);
-        setTimeout(() => { document.getElementById("win-3").classList.remove("hidden"); }, 500);
+        const win = new Audio("./audio/win.mp3");
+        win.play();
         return;
     }
 
@@ -397,9 +388,6 @@ function update() {
         controls.unlock();
         listener.setMasterVolume(0);
         document.querySelector("canvas").remove();
-        setTimeout(() => { document.getElementById("bsod-1").classList.remove("hidden"); }, 100);
-        setTimeout(() => { document.getElementById("bsod-2").classList.remove("hidden"); }, 250);
-        setTimeout(() => { document.getElementById("bsod-3").classList.remove("hidden"); }, 500);
         return;
     }
     else if (player.userData.health != previousHealth) {

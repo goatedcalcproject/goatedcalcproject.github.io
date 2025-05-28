@@ -628,6 +628,8 @@ function Sniffer(level, player, listener, scene) {
 
         return (1 - multiplierThing / 2) + multiplierThing / (1 + Math.E ** (-0.5 * documentsCollected));
     }
+    
+    const defaultVolume = 1.1;
 
     function awake() {
         object.awake();
@@ -650,7 +652,7 @@ function Sniffer(level, player, listener, scene) {
             sniffingSound.setBuffer(buffer);
             sniffingSound.setRefDistance(15);
             sniffingSound.setMaxDistance(sniffingRadius * 1.3);
-            sniffingSound.setVolume(1.1);
+            sniffingSound.setVolume(defaultVolume);
             sniffingSound.setLoop(true);
             sniffingSound.play();
             object.add(sniffingSound);
@@ -707,7 +709,11 @@ function Sniffer(level, player, listener, scene) {
         
         if (player.userData.beingTormented) {
             stunnedTimer = stunnedCooldown;
+            sniffingSound.setVolume(0);
             return;
+        }
+        else {
+            sniffingSound.setVolume(defaultVolume);
         }
         previouslyTormented = player.userData.beingTormented;
 

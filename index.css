@@ -183,7 +183,7 @@ hr {
     animation: move-background 1.2s linear infinite;
     z-index: 6748476876;
 }
-#sniffer-overlay {
+#hahn-overlay {
     /* background-color: ; */
     background-image: 
         url("./textures/hahn_indicator.gif"), radial-gradient(circle, transparent 0%, #000 70%);
@@ -433,8 +433,6 @@ input[type=color] {
     transform: translate(-50%, -50%);
     text-align: center;
     z-index: 1000;
-
-    overflow: hidden;
 }
 #cutscene-content {
     background-image: url("./textures/backdrop.png");
@@ -443,11 +441,12 @@ input[type=color] {
     image-rendering: pixelated;
     width: 100%;
     height: 300px;
+    overflow: hidden !important;
 }
 #mr-hahn {
-    width: 200px;
-    height: 200px;
-    margin-top: 50px;
+    width: 250px;
+    height: 250px;
+    margin-top: 35px;
 }
 @keyframes talking {
     0% { transform: translateY(0px); }

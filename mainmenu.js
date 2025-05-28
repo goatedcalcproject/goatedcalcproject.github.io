@@ -110,7 +110,7 @@ function closeWindow(id) {
 function displayDialog(_index) {
     if (_index >= dialog.length) {
         document.querySelector("#cutscene").style.display = "none";
-        openLevel("./levels/sniffer.json");
+        openLevel("./levels/main.json");
         return;
     }
 

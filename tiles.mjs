@@ -14,8 +14,8 @@ const bobHappyMaterial = new THREE.SpriteMaterial({ map: util.loadTexture("bob_h
 const exitMaterial = new THREE.SpriteMaterial({ map: util.loadTexture("exit.png") });
 const martinMaterial = new THREE.SpriteMaterial({ map: util.loadTexture("martin.png") });
 const martinInactiveMaterial = new THREE.SpriteMaterial({ map: util.loadTexture("martin_inactive.png") });
-const snifferSmokeMaterial = new THREE.SpriteMaterial({ map: util.loadTexture("smoke.png"), opacity: 0.5 });
-const snifferWalkingMaterial = new THREE.SpriteMaterial({ map: util.loadTexture("smoke.png") });
+const hahnSmokeMaterial = new THREE.SpriteMaterial({ map: util.loadTexture("smoke.png"), opacity: 0.5 });
+const hahnWalkingMaterial = new THREE.SpriteMaterial({ map: util.loadTexture("smoke.png") });
 
 const windTurbineMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
 
@@ -586,7 +586,7 @@ function RusherEnemy(level, listener, textures, deathTexture, speed, damage, pla
 }
 
 
-function Sniffer(level, player, listener, scene) {
+function Hahn(level, player, listener, scene) {
     const multiplierThing = 0.5;
 
     const sniffingRadius = 25; // * 2
@@ -604,8 +604,8 @@ function Sniffer(level, player, listener, scene) {
     let smokeParticles = null;
     let walkingParticles = null;
 
-    let snifferTraversableNodesSet = new Set([]);
-    let snifferTraversableNodes = [];
+    let hahnTraversableNodesSet = new Set([]);
+    let hahnTraversableNodes = [];
 
     let pathIndicators = [];
 
@@ -637,7 +637,7 @@ function Sniffer(level, player, listener, scene) {
         if (PATH_INDICATORS) level.add(tilePlane);
 
         smokeParticles = particles.ParticleSystem(
-            null, snifferSmokeMaterial, 1.25, 0.01, 1, 
+            null, hahnSmokeMaterial, 1.25, 0.01, 1, 
             new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 2, particles.DeathTypes.SHRINK,
             true, true);
         scene.add(smokeParticles);
@@ -704,7 +704,7 @@ function Sniffer(level, player, listener, scene) {
     }
 
     function update(delta) {
-        document.getElementById("sniffer-overlay").style.opacity = 
+        document.getElementById("hahn-overlay").style.opacity = 
             Math.max(0.5 - (0.5 / (sniffingRadius * 0.75)) * player.position.distanceTo(object.position), 0);
         
         if (player.userData.beingTormented) {
@@ -730,21 +730,21 @@ function Sniffer(level, player, listener, scene) {
 
         timeElapsed += delta;
 
-        if (snifferTraversableNodes.length == 0) {
+        if (hahnTraversableNodes.length == 0) {
             function getTraversableNodes(floodStart) {
-                snifferTraversableNodesSet.add(level.vector2ToTileKey(floodStart));
+                hahnTraversableNodesSet.add(level.vector2ToTileKey(floodStart));
     
                 level.getAdjacentTiles(floodStart).forEach((node) => {
                     const nodeKey = level.vector2ToTileKey(node);
                     // alert(nodeKey)
-                    if (snifferTraversableNodesSet.has(nodeKey)) return;
+                    if (hahnTraversableNodesSet.has(nodeKey)) return;
                     getTraversableNodes(node);
                 });
             }
             getTraversableNodes(level.worldToTile(object.position));
-            snifferTraversableNodes = Array.from(
-                snifferTraversableNodesSet).map((key) => level.keyToVector2(key));
-            // alert(JSON.stringify(snifferTraversableNodes));
+            hahnTraversableNodes = Array.from(
+                hahnTraversableNodesSet).map((key) => level.keyToVector2(key));
+            // alert(JSON.stringify(hahnTraversableNodes));
         }
 
         object.updateTime(delta);
@@ -833,7 +833,7 @@ function Sniffer(level, player, listener, scene) {
     function unsniffedUpdate(delta) {
         if (path.length == 0) {
             const randomNode = 
-                snifferTraversableNodes[Math.floor(Math.random() * snifferTraversableNodes.length)];
+                hahnTraversableNodes[Math.floor(Math.random() * hahnTraversableNodes.length)];
             // alert(JSON.stringify(randomNode));
             path = level.aStar(level.worldToTile(object.position), randomNode);
             updatePathIndicators();
@@ -854,5 +854,5 @@ function Sniffer(level, player, listener, scene) {
 
 export {
     WallBlock, RandomizedWallBlock, Bob, ItemPedestal, NormalWallBlock, BlockDoor, SecretTrigger, Exit, PlantPot, WindTurbine, 
-    RusherEnemy, Sniffer, Martin
+    RusherEnemy, Hahn, Martin
 }

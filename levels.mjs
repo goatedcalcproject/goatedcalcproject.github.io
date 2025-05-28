@@ -46,8 +46,8 @@ export function Level(main, scene, player, listener, filePath = "./levels/welcom
                 [util.loadTexture("entities/bog/bog1.png"), util.loadTexture("entities/bog/bog2.png")], 
                 util.loadTexture("entities/bog/bogdead.png"), 8.5, 1, player);
         },
-        "SNIFFER_ENTITY": () => { // Sniffer
-            return new tiles.Sniffer(object, player, listener, scene);
+        "HAHN_ENTITY": () => {
+            return new tiles.Hahn(object, player, listener, scene);
         }
     }
 

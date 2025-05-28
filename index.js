@@ -171,6 +171,17 @@ window.onmousedown = function(event) {
     listener.context.resume();
 }
 
+function problemWrong() {
+    player.userData.health -= 1;
+    const fard = new Audio("./audio/fard.wav");
+    fard.play();
+}
+function closeProblemOverlay() {
+    document.getElementById("answers").reset();
+    document.getElementById("apclassroom-overlay").classList.add("hidden");
+    player.userData.beingTormented = false;
+}
+
 // start() update runs once before the first frame
 function start() {
     setupPlayer(); console.log("player setup")
@@ -192,14 +203,10 @@ function start() {
             ding.play();
         }
         else {
-            player.userData.health -= 1;
-            const fard = new Audio("./audio/fard.wav");
-            fard.play();
+            problemWrong();
         }
 
-        document.getElementById("answers").reset();
-        document.getElementById("apclassroom-overlay").classList.add("hidden");
-        player.userData.beingTormented = false;
+        closeProblemOverlay();
     }
 }
 
@@ -234,6 +241,7 @@ function updatePlayer(delta) {
         //
         //
         //
+        timesEscaped++;
     }
     previouslyTormented = player.userData.beingTormented;
 
@@ -356,6 +364,26 @@ function update() {
 
     const delta = clock.getDelta();
     timeElapsed += delta;
+    if (!player.userData.beingTormented) problemTimer = 3;
+    if (problemTimer <= 0 && player.userData.beingTormented) {
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        problemWrong();
+        closeProblemOverlay();
+        controls.lock();
+    }
+    else {
+        let funny = Math.ceil(problemTimer).toString();
+        if (funny.length == 1) funny = "0" + funny;
+        document.getElementById("problem-timer").innerText = `0:${funny} Remaining`;
+        problemTimer -= delta;
+    }
 
     document.getElementById("user-data").innerHTML = JSON.stringify(player.userData)
         .replace("icecream", "<span id='ice-cream'>icecream</span>")
@@ -414,13 +442,22 @@ function update() {
     // composer.render();
 }
 
-const problemAnswers = [20, 0, 2, 6, 0];
+const problemAnswers = [20, 0, 2, 6, 0, 0, 5, 2];
 let problemIndex = 0;
+let timesEscaped = 0;
+let problemTimer = 0;
+
+function timeRemaining() {
+    return Math.floor(20 * (timesEscaped + 1) ** -0.3);
+}
 
 function generateNewProblem() {
-    problemIndex = Math.floor(Math.random() * 5);
+    problemIndex = Math.floor(Math.random() * 7);
     try {
         document.getElementById("problem-image").src = `./problems/${problemIndex}.png`;
+        // alert(problemAnswers[problemIndex]);
+        // alert(timeRemaining());
+        problemTimer = timeRemaining();
     }
     catch (e) {
         alert(e);

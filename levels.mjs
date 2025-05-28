@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import * as util from './util.mjs';
 import * as tiles from './tiles.mjs';
-// import { userData } from 'three/tsl';
 
 const TILE_SIZE = 4;
 const INDICATE_NODES = false;
@@ -273,6 +272,12 @@ export function Level(main, scene, player, listener, filePath = "./levels/welcom
         for (let i = 0; i < requiresUpdate.length; i++) {
             requiresUpdate[i].update(delta);
         }
+
+        if (player.userData.document) {
+            document.getElementById("collected").innerText = player.userData.document;
+        }
+        else document.getElementById("collected").innerText = "0";
+        document.getElementById("total").innerText = totalDocuments;
     }
     const RAYCAST_PERCISION = 0.03;
     function raycast(a, b, max = 9999, radius = 0.025) {

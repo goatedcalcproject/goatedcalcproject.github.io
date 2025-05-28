@@ -463,3 +463,14 @@ input[type=color] {
 .sliding-in {
     animation: slide-in 1.2s ease-out forwards;
 }
+
+@keyframes timer-blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+#problem-timer {
+    float: right;
+    color: rgb(167, 49, 49);
+    animation: timer-blink 1s linear infinite;
+}

@@ -67,22 +67,22 @@ const dialog = [
     {
         "text": "Hi",
         "options": ["Hi", "Hello", "sup"],
-        "time": 0.5, "sound": "./audio/1.mp3"
+        "time": 0.5, "sound": "./audio/voices/1.mp3"
     },
     {
         "text": "Did you do your FRQs? they've been due since last week!",
         "options": ["Yes", "Yep", "Yeah"],
-        "time": 4, "sound": "./audio/2.mp3"
+        "time": 4, "sound": "./audio/voices/2.mp3"
     },
     {
         "text": "Yeah, where is it then?",
         "options": ["I lost them on the way to class"],
-        "time": 3, "sound": "./audio/3.mp3"
+        "time": 3, "sound": "./audio/voices/3.mp3"
     },
     {
         "text": "EXCUSES! You know what happens when you don't do your FRQs. YOU WILL PAY",
         "options": ["..."],
-        "time": 7, "sound": "./audio/4.mp3"
+        "time": 7, "sound": "./audio/voices/4.mp3"
     }
 ]
 
@@ -138,6 +138,9 @@ function displayDialog(_index) {
 
     document.getElementById("mr-hahn").classList.add("talking");
 
+    const audio = new Audio(_dialog.sound);
+    audio.play();
+
     const interval = setInterval(() => {
         if (index < _dialogText.length) {
             dialogText.innerHTML += _dialogText[index];
@@ -153,8 +156,6 @@ function displayDialog(_index) {
                 const option = document.createElement("button");
                 option.innerHTML = _dialog.options[i];
                 option.onclick = () => {
-                    const audio = new Audio(dialog[_index + 1].sound);
-                    audio.play();
                     displayDialog(_index + 1);
                 };
                 dialogOptions.appendChild(option);
